@@ -1,0 +1,27 @@
+From 163b33c8fe933addaddb55639cfec683229ccbb1 Mon Sep 17 00:00:00 2001
+From: Jacob Chaffin <jchaffin@ucla.edu>
+Date: Fri, 25 Jan 2019 03:41:58 -0800
+Subject: [PATCH 3/3] v27.0.90
+
+* configure.ac
+  (AC_INIT) Bump development version to distinguish from 27.0.50
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 4e986ac80b..3161be7a66 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -23,7 +23,7 @@
+ 
+ AC_PREREQ(2.65)
+ dnl Note this is parsed by (at least) make-dist and lisp/cedet/ede/emacs.el.
+-AC_INIT(GNU Emacs, 27.0.50, bug-gnu-emacs@gnu.org, , https://www.gnu.org/software/emacs/)
++AC_INIT(GNU Emacs, 27.0.90, bug-gnu-emacs@gnu.org, , https://www.gnu.org/software/emacs/)
+ 
+ dnl Set emacs_config_options to the options of 'configure', quoted for the shell,
+ dnl and then quoted again for a C string.  Separate options with spaces.
+-- 
+2.20.1
+

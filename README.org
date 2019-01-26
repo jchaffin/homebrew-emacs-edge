@@ -1,0 +1,11 @@
+
+#+title: Emacs Edge
+
+Emacs Edge is an Homebrew formula for an *experimental* build of the GNU Emacs text editor. By default, this build has several *bleeding edge* features enabled by default, including support for [[https://en.wikipedia.org/wiki/X_Window_System][X11]] , [[https://www.freedesktop.org/wiki/Software/dbus/][dbus]], and ~xwidgets~. On macOS, xwidget webkit is provided by the awesome work of  [[@veshboo]]  which uses the [[https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/OSX_Technology_Overview/CocoaApplicationLayer/CocoaApplicationLayer.html][Cocoa  application layer]] to embed a fully-featured graphical web browser in Emacs. While forks are generally [[https://www.emacswiki.org/emacs/TheFutureOfGnuEmacs#toc1][discouraged in the community]], modifications to the Emacs source code are limited to the configuration files  and a handful of C files that execute system-specific code such as the host operating system or the  presence of an external library.
+
+The additional features provided by Emacs Edge are as follows:
+
+- Add support for ImageMagick version 7 [[https://14694681589259736923.googlegroups.com/attach/3d85469761a5b/imagemagick7.patch?part=0.1&view=1&vt=ANaJVrGDN968fCGKO4R4ZBPJICxyvSVgggvsZ1wKyEjzFgeslJuaNvjvb95zTw6HZebtBLckOI6fNFGVVcaR0JeJEH7m1s_XUOHc0Us9JeOgWNfIRvhCx9s][(Bug#25967)]]
+- Rebase [[https://github.com/veshboo/emacs][nsxwidget]] onto master ([[https://github.com/emacs-mirror/emacs/commit/f6eacc][@f6eacc]] at time of most recent [[https://gist.github.com/jchaffin/91eebb12465c6f7c1366bcbaac544ec0/revisions][revision]]). Fix for [[https://github.com/d12frosted/homebrew-emacs-plus/issues/94][#94]].
+- Allow rendering for host-dependent [[https://gist.githubusercontent.com/aatxe/260261daf70865fbf1749095de9172c5/raw/214b50c62450be1cbee9f11cecba846dd66c7d06/patch-multicolor-font.diff][multicolored fonts]] such as [[https://news.ycombinator.com/item?id=13011185][Apple Color Emoji]] (albeit the utility of this is  [[https://github.com/syl20bnr/spacemacs/issues/6654#issuecomment-234746468][questionable]]).
+- Enable portable dumper by default (merged into master [[https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=d12e5d003d503025c1c9b0335d6518a6c3bdfae1][@d12e5d]])

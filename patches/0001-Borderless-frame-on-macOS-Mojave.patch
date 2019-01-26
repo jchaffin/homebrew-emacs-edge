@@ -1,0 +1,119 @@
+From eaa8362f684b0c9fad08d6452e53b26242d83b7d Mon Sep 17 00:00:00 2001
+From: Jacob Chaffin <jchaffin@ucla.edu>
+Date: Fri, 25 Jan 2019 21:01:09 -0800
+Subject: [PATCH] Borderless frame on macOS Mojave
+
+---
+ src/nsterm.m | 66 +++++++++-------------------------------------------
+ 1 file changed, 11 insertions(+), 55 deletions(-)
+
+diff --git a/src/nsterm.m b/src/nsterm.m
+index 2c25433828..eaa2b67db1 100644
+--- a/src/nsterm.m
++++ b/src/nsterm.m
+@@ -452,7 +452,10 @@ - (NSColor *)colorUsingDefaultColorSpace
+                                | NSWindowStyleMaskResizable         \
+                                | NSWindowStyleMaskMiniaturizable    \
+                                | NSWindowStyleMaskClosable)
+-#define FRAME_UNDECORATED_FLAGS NSWindowStyleMaskBorderless
++
++#define FRAME_UNDECORATED_FLAGS (NSWindowStyleMaskResizable         \
++                                 | NSWindowStyleMaskMiniaturizable  \
++                                 | NSWindowStyleMaskClosable)
+ 
+ /* TODO: Get rid of need for these forward declarations.  */
+ static void ns_condemn_scroll_bars (struct frame *f);
+@@ -1879,23 +1882,11 @@ breaks live resize (resizing with a mouse), so don't do it if
+     {
+       block_input ();
+ 
+-      if (NILP (new_value))
+-        {
+-          FRAME_UNDECORATED (f) = false;
+-          [window setStyleMask: ((window.styleMask | FRAME_DECORATED_FLAGS)
+-                                  ^ FRAME_UNDECORATED_FLAGS)];
++      [window setToolbar: nil];
++      /* Do I need to release the toolbar here? */
+ 
+-          [view createToolbar: f];
+-        }
+-      else
+-        {
+-          [window setToolbar: nil];
+-          /* Do I need to release the toolbar here?  */
+-
+-          FRAME_UNDECORATED (f) = true;
+-          [window setStyleMask: ((window.styleMask | FRAME_UNDECORATED_FLAGS)
+-                                 ^ FRAME_DECORATED_FLAGS)];
+-        }
++      FRAME_UNDECORATED (f) = true;
++      [window setStyleMask: (window.styleMask | FRAME_UNDECORATED_FLAGS)];
+ 
+       /* At this point it seems we don't have an active NSResponder,
+          so some key presses (TAB) are swallowed by the system.  */
+@@ -6981,36 +6972,7 @@ - (void) updateFrameSize: (BOOL) delay
+   NSTRACE_MSG  ("Original columns: %d", cols);
+   NSTRACE_MSG  ("Original rows: %d", rows);
+ 
+-  if (! [self isFullscreen])
+-    {
+-      int toolbar_height;
+-#ifdef NS_IMPL_GNUSTEP
+-      // GNUstep does not always update the tool bar height.  Force it.
+-      if (toolbar && [toolbar isVisible])
+-          update_frame_tool_bar (emacsframe);
+-#endif
+-
+-      toolbar_height = FRAME_TOOLBAR_HEIGHT (emacsframe);
+-      if (toolbar_height < 0)
+-        toolbar_height = 35;
+-
+-      extra = FRAME_NS_TITLEBAR_HEIGHT (emacsframe)
+-        + toolbar_height;
+-    }
+-
+-  if (wait_for_tool_bar)
+-    {
+-      /* The toolbar height is always 0 in fullscreen and undecorated
+-         frames, so don't wait for it to become available.  */
+-      if (FRAME_TOOLBAR_HEIGHT (emacsframe) == 0
+-          && FRAME_UNDECORATED (emacsframe) == false
+-          && ! [self isFullscreen])
+-        {
+-          NSTRACE_MSG ("Waiting for toolbar");
+-          return;
+-        }
+-      wait_for_tool_bar = NO;
+-    }
++  wait_for_tool_bar = NO;
+ 
+   neww = (int)wr.size.width - emacsframe->border_width;
+   newh = (int)wr.size.height - extra;
+@@ -7385,11 +7347,9 @@ - (instancetype) initFrameFromEmacs: (struct frame *)f
+   maximizing_resize = NO;
+ #endif
+ 
+-  win = [[EmacsWindow alloc]
++  win = [[EmacsFSWindow alloc]
+             initWithContentRect: r
+-                      styleMask: (FRAME_UNDECORATED (f)
+-                                  ? FRAME_UNDECORATED_FLAGS
+-                                  : FRAME_DECORATED_FLAGS)
++                      styleMask: FRAME_UNDECORATED_FLAGS
+                         backing: NSBackingStoreBuffered
+                           defer: YES];
+ 
+@@ -7422,10 +7382,6 @@ - (instancetype) initFrameFromEmacs: (struct frame *)f
+                    NILP (tem) ? "Emacs" : SSDATA (tem)];
+   [win setTitle: name];
+ 
+-  /* toolbar support */
+-  if (! FRAME_UNDECORATED (f))
+-    [self createToolbar: f];
+-
+ #if defined (NS_IMPL_COCOA) && MAC_OS_X_VERSION_MAX_ALLOWED >= 101000
+ #ifndef NSAppKitVersionNumber10_10
+ #define NSAppKitVersionNumber10_10 1343
+-- 
+2.20.1
+
