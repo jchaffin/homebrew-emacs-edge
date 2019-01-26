@@ -73,7 +73,7 @@ class EmacsEdge < Formula
     patch do
       if MacOS.full_version == "10.14"
         url "https://raw.githubusercontent.com/jchaffin/homebrew-emacs-edge/master/patches/borderless-frame-on-macOS-Mojave.patch"
-        sha256 "c092a00cef8c89ea61955442d82e6f7b31c91da3fd49beb891cea5780c43b4b6"
+        sha256 "9388244a5312028522858b5f3d38414ae1f2efdcebf3e144723727ba8220652d"
       else
         url "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/borderless-frame-on-macOS.patch"
         sha256 "cbfb097d77f47b31ad8e87751b1c05150ae94e651852cd565d991c11beee48e3"
