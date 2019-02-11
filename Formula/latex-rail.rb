@@ -21,16 +21,16 @@ class LatexRail < Formula
 
   test do
     system bin/"rail", "--version"
-    (testpath/"Test.tex").write << -EOS.undent
-      \documentclass[preview]{standalone}
-      \usepackage{rail}
-      \begin{document}
-      \begin{rail}
+    (testpath/"Test.tex").write<<-EOS.undent
+      \\documentclass[preview]{standalone}
+      \\usepackage{rail}
+      \\begin{document}
+      \\begin{rail}
       decl : 'def' identifier '=' ( expression + ';' )
        | 'type' identifier '=' type
        ;
-      \end{rail}
-      \end{document}
+      \\end{rail}
+      \\end{document}
     EOS
     system "latex", testpath/"Test"
     assert_predicate testpath/"Test.rai", :exist?
