@@ -33,11 +33,11 @@ class LatexRail < Formula
       \end{document}
     EOS
     system "latex", testpath/"Test"
-    assert_predicate testpath/"Test.rai" :exist?
+    assert_predicate testpath/"Test.rai", :exist?
     system bin/"rail", testpath/"Test"
-    assert_predicate testpath/"Test.rao" :exist?
+    assert_predicate testpath/"Test.rao", :exist?
     system "latex", testpath/"Test"
-    assert_predicate testpath/"Test.dvi" :exist?
+    assert_predicate testpath/"Test.dvi", :exist?
   end
 end
 
