@@ -29,9 +29,9 @@ class LatexRail < Formula
   def caveats
     <<~EOS
     To complete install of latex-rail, issue the following command:
-      sudo ln -s #{share}/texmf-local/tex/latex/rails.sty $(kpsewhich --var-value=TEXMFLOCAL)/tex/latex
+      sudo ln -s #{share}/texmf-local/tex/latex/rail.sty $(kpsewhich --var-value=TEXMFLOCAL)/tex/latex
     Then register with texlive:
-      sudo texmkslr
+      sudo mktexlsr
     EOS
   end
 
