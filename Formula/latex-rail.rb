@@ -1,4 +1,4 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
+  # Documentation: https://docs.brew.sh/Formula-Cookbook
 #                https://www.rubydoc.info/github/Homebrew/brew/master/Formula
 # PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class LatexRail < Formula
@@ -12,10 +12,32 @@ class LatexRail < Formula
     ENV.deparallelize  # if your formula fails when building in parallel
     # Remove unrecognized options if warned by configure
     # system "cmake", ".", *std_cmake_args
-    inreplace "Makefile", "-Dm", "-m"
+    inreplace "Makefile" do |s|
+      s.gsub! '"-Dm"', "-m"
+    end
     system "make", "PREFIX=#{prefix}", "TEXDIR=#{share}/texmf/tex/latex", "MANSUFFIX=1", "install"
+    system "mktexlsr"
   end
+
   test do
-    system "true"
+    system bin/"rail", "--version"
+    (testpath/"Test.tex").write << -EOS.undent
+      \documentclass[preview]{standalone}
+      \usepackage{rail}
+      \begin{document}
+      \begin{rail}
+      decl : 'def' identifier '=' ( expression + ';' )
+       | 'type' identifier '=' type
+       ;
+      \end{rail}
+      \end{document}
+    EOS
+    system "latex", testpath/"Test"
+    assert_predicate testpath/"Test.rai" :exist?
+    system bin/"rail", testpath/"Test"
+    assert_predicate testpath/"Test.rao" :exist?
+    system "latex", testpath/"Test"
+    assert_predicate testpath/"Test.dvi" :exist?
   end
 end
+
