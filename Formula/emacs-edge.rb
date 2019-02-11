@@ -5,6 +5,10 @@ class EmacsEdge < Formula
   sha256 "8e4523f14062f63b9816124e9d7d91e6c772b46f2c23d7d7c4219df770ebde84"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
+  bottle do
+    root_url "https://dl.bintray/jchaffin/emacs-edge"
+    rebuild 1
+  end
 
   option "without-cocoa",
          "Build a non-Cocoa version of Emacs"
@@ -13,7 +17,7 @@ class EmacsEdge < Formula
   option "without-modules",
          "Build with dynamic modules support."
   option "without-xml2",
-          "Build with libxml2 support"
+          "Build without libxml2 support"
   option "without-gnutls",
           "Build without gnutls support"
   option "without-xwidgets",
@@ -22,17 +26,13 @@ class EmacsEdge < Formula
          "Build without portable dumper"
   option "without-imagemagick",
          "Build without imagemagick 7 support"
-  option "without-rsvg",
-         "Build without librsvg."
   # Opt in
   option "with-x11",
-          "Experimental: Build with x11 support"
+         "Build with x11 support"
   option "with-ctags",
-          "Don't remove the ctags executable that emacs provides"
-  option "with-no-titlebar",
-         "Build with a patch for no title bars on frames (--HEAD is not supported)"
+         "Don't remove the ctags executable that emacs provides"
   option "with-modern-icon",
-          "Using a modern style Emacs icon"
+         "Use a modern style Emacs icon"
 
   depends_on "autoconf" => :build
   depends_on "gnu-sed" => :build
@@ -42,16 +42,15 @@ class EmacsEdge < Formula
   depends_on "texinfo" => :build
 
   depends_on "little-cms2" => :recommended
+  depends_on "dbus" => :recommended
   depends_on "gnutls" => :recommended
   depends_on "librsvg" => :recommended
-  depends_on "dbus" => :recommended
   depends_on "imagemagick" => :recommended
+  depends_on "mailutils" => :optional
 
   depends_on :x11 => :optional
   depends_on "libxml2" if build.with? "xml2"
   depends_on "glib" => :optional
-  depends_on "gnutls"
-
 
   resource "modern-icon" do
     url "https://s3-us-west-1.amazonaws.com/emacs-edge/Emacs.icns.modern"
@@ -69,18 +68,6 @@ class EmacsEdge < Formula
     end
   end
 
-  if build.with? "no-titlebar"
-    patch do
-      if MacOS.full_version == "10.14"
-        url "https://raw.githubusercontent.com/jchaffin/homebrew-emacs-edge/master/patches/borderless-frame-on-macOS-Mojave.patch"
-        sha256 "9388244a5312028522858b5f3d38414ae1f2efdcebf3e144723727ba8220652d"
-      else
-        url "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/borderless-frame-on-macOS.patch"
-        sha256 "cbfb097d77f47b31ad8e87751b1c05150ae94e651852cd565d991c11beee48e3"
-      end
-    end
-  end
-
   def install
     args = %W[
       --disable-dependency-tracking
@@ -93,37 +80,29 @@ class EmacsEdge < Formula
     unless build.without? "xml2"
       args << "--with-xml2"
     end
-
     if build.without? "dbus"
       args << "--without-dbus"
     else
       args << "--with-dbus"
     end
-
     unless build.without? "gnutls"
       args << "--with-gnutls"
     end
-
     unless build.without? "imagemagick"
       args << "--with-imagemagick"
     end
-
     unless build.without? "modules"
       args << "--with-modules"
     end
-
     unless build.without? "librsvg"
       args << "--with-rsvg"
     end
-
     unless build.without? "pdumper"
       args << "--with-pdumper"
     end
-
     unless build.without? "xwidgets"
      args << "--with-xwidgets"
     end
-
     args << "--without-pop" << "--with-mailutils" if build.with? "mailutils"
 
 
@@ -179,7 +158,6 @@ class EmacsEdge < Formula
     end
   end
 
-
   plist_options manual: "emacs"
 
   def plist; <<~EOS
@@ -210,7 +188,7 @@ class EmacsEdge < Formula
       Emacs.app was installed to:
         #{prefix}
 
-      To link the application to default Homebrew App location:
+      To link the application:
         ln -s #{prefix}/Emacs.app /Applications
     EOS
   end
