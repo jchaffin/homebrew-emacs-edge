@@ -21,7 +21,7 @@ class LatexRail < Formula
 
   test do
     system bin/"rail", "--version"
-    (testpath/"Test.tex").write<<-EOS.undent
+    (testpath/"Test.tex").write<<~EOS
       \\documentclass[preview]{standalone}
       \\usepackage{rail}
       \\begin{document}
