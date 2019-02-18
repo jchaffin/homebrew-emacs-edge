@@ -5,11 +5,11 @@ class EmacsEdge < Formula
   sha256 "d16b438abbbb43725419bec1a71c2754a28fa72908c553233e5a21fc9fc8e3c5"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
-  bottle do
+   bottle do
     root_url "https://dl.bintray/jchaffin/emacs-edge"
+    sha256 "5ff1775a5daa12597a6c218c585efa2725fd9221d877624b6ab118562dc41b3e" => :mojave
     rebuild 1
   end
-
   option "without-cocoa",
          "Build a non-Cocoa version of Emacs"
   option "without-dbus",
@@ -192,7 +192,6 @@ class EmacsEdge < Formula
         ln -s #{prefix}/Emacs.app /Applications
     EOS
   end
-
   test do
     assert_equal "4", shell_output("#{bin}/emacs --batch --eval=\"(print (+ 2 2))\"").strip
   end
