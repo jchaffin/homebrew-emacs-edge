@@ -2,7 +2,7 @@ class EmacsEdge < Formula
   desc "GNU Emacs text editor"
   homepage "https://www.gnu.org/software/emacs/"
   url "https://github.com/jchaffin/emacs/archive/emacs-27.0.90.tar.gz"
-  sha256 "b0ad84d668781b33c6d01dc5f6fe2a3279ad70d6fbcaa9a12791fcc143cf98b5"
+  sha256 "d16b438abbbb43725419bec1a71c2754a28fa72908c553233e5a21fc9fc8e3c5"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
   bottle do
