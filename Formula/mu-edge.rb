@@ -1,19 +1,12 @@
 # Note that odd release numbers indicate unstable releases.
 # Please only submit PRs for [x.x.even] version numbers:
 # https://github.com/djcb/mu/commit/23f4a64bdcdee3f9956a39b9a5a4fd0c5c2370ba
-class Mu < Formula
+class MuEdge < Formula
   desc "Tool for searching e-mail messages stored in the maildir-format"
   homepage "https://www.djcbsoftware.nl/code/mu/"
   url "https://github.com/djcb/mu/releases/download/v1.0/mu-1.0.tar.xz"
   sha256 "966adc4db108f8ddf162891f9c3c24ba27f78c31f86575a0e05fbf14e857a513"
   revision 1
-
-  bottle do
-    cellar :any
-    sha256 "0e4a61daf8d93a9aa866da1891d69f34024344910c98b3efae13f83fd850cb2f" => :mojave
-    sha256 "8ee77a30b4b54367394b3a37b419d3d183950762728b118154e0bacf91e4f059" => :high_sierra
-    sha256 "d6ecd32c774b34ab93ac9aefd16d8a703976a3bee23b581f803153b19f42772e" => :sierra
-  end
 
   head do
     url "https://github.com/djcb/mu.git"
