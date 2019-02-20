@@ -5,10 +5,10 @@ class EmacsEdge < Formula
   sha256 "f593ee07de0642083c97b466800ba69d393ccbf8e2be78fd88fdbc0fcc72acdf"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
-   bottle do
+  bottle do
     root_url "https://dl.bintray/jchaffin/emacs-edge"
-    sha256 "5ff1775a5daa12597a6c218c585efa2725fd9221d877624b6ab118562dc41b3e" => :mojave
-    rebuild 1
+    rebuild 2
+    sha256 "6ef23ff54be97aeee66fb92c75153b50240682e9e32c843684945ed0f752c996" => :mojave
   end
   option "without-cocoa",
          "Build a non-Cocoa version of Emacs"
