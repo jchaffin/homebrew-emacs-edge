@@ -1,7 +1,7 @@
 class EmacsEdge < Formula
   desc "GNU Emacs text editor"
   homepage "https://www.gnu.org/software/emacs/"
-  url "https://github.com/jchaffin/emacs/archive/emacs-27.0.1.tar.gz"
+  url "https://github.com/jchaffin/emacs/archive/emacs-27.1.0.tar.gz"
   sha256 "01b92faaa23aaf737c1f3f9be8eabd1126b33efaef7ea9fba42c467d01bc738f"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
