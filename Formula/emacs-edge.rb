@@ -1,15 +1,10 @@
 class EmacsEdge < Formula
   desc "GNU Emacs text editor"
   homepage "https://www.gnu.org/software/emacs/"
-  url "https://github.com/jchaffin/emacs/archive/emacs-27.0.90.tar.gz"
-  sha256 "f593ee07de0642083c97b466800ba69d393ccbf8e2be78fd88fdbc0fcc72acdf"
+  url "https://github.com/jchaffin/emacs/archive/emacs-27.0.1.tar.gz"
+  sha256 "01b92faaa23aaf737c1f3f9be8eabd1126b33efaef7ea9fba42c467d01bc738f"
   conflicts_with "emacs", :because => "Conflicting binaries"
   head "https://github.com/jchaffin/emacs.git"
-  bottle do
-    root_url "https://dl.bintray/jchaffin/emacs-edge"
-    rebuild 2
-    sha256 "6ef23ff54be97aeee66fb92c75153b50240682e9e32c843684945ed0f752c996" => :mojave
-  end
   option "without-cocoa",
          "Build a non-Cocoa version of Emacs"
   option "without-dbus",
